@@ -9,7 +9,7 @@ import { DeviceService } from './components/devices/device.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatToolbarModule, RouterLink, MatDialogModule, MatButtonModule],
+  imports: [RouterOutlet, MatToolbarModule, MatDialogModule, MatButtonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
