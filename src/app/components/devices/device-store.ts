@@ -1,47 +1,65 @@
-import { signalStore, withState, withComputed, withMethods, patchState } from '@ngrx/signals';
-import { computed } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 import { Device } from '../../models/Device';
 
-export interface DeviceState {
-    devices: Device[];
-    loading: boolean;
-    error: string | null;
+export interface PaginationInfo {
+  total: number;
+  page: number;
+  pageSize: number;
 }
 
-const initialState: DeviceState = {
-    devices: [],
-    loading: false,
-    error: null
-};
+@Injectable({
+  providedIn: 'root'
+})
+export class DeviceStore {
+  // Signals privadas para el estado
+  private _devices = signal<Device[]>([]);
+  private _loading = signal<boolean>(false);
+  private _error = signal<string | null>(null);
+  private _totalDevices = signal<number>(0);
 
-export const DeviceStore = signalStore(
-  { providedIn: 'root' },
-  withState(initialState),
-  withComputed(({ devices }: { devices: any }) => ({
-    devicesCount: computed(() => devices().length),
-    sortedDevices: computed(() => [...devices()].sort((a: Device, b: Device) => a.name.localeCompare(b.name)))
-})),
-  withMethods((store: any) => ({
-    setDevices(devices: Device[]) {
-      patchState(store, { devices, loading: false, error: null });
-    },
-    setLoading(loading: boolean) {
-      patchState(store, { loading, error: null });
-    },
-    setError(error: string) {
-      patchState(store, { loading: false, error });
-    },
-    addDevice(device: Device) {
-      const devices = [...store.devices(), device];
-      patchState(store, { devices, loading: false, error: null })
-    },
-    updateDevice(id: string, updates: Partial<Device>) {
-        const devices = store.devices().map((d: Device) => d.id === id ? {...d, updates} : d);
-        patchState(store, { devices })
-    },
-    removeDevice(id: string) {
-        const devices = store.devices().filter((d: Device) => d.id !== id);
-        patchState(store, { devices })
+  // Signals públicas de solo lectura
+  readonly devices = this._devices.asReadonly();
+  readonly loading = this._loading.asReadonly();
+  readonly error = this._error.asReadonly();
+  readonly totalDevices = this._totalDevices.asReadonly();
+
+  // Computed signals
+  readonly devicesCount = computed(() => this._devices().length);
+  readonly sortedDevices = computed(() => this._devices());
+
+  // Métodos para actualizar el estado
+  setDevices(devices: Device[], total?: number) {
+    this._devices.set(devices);
+    if (total !== undefined) {
+      this._totalDevices.set(total);
     }
-  }))
-);
+    this._loading.set(false);
+    this._error.set(null);
+  }
+
+  setLoading(loading: boolean) {
+    this._loading.set(loading);
+    this._error.set(null);
+  }
+
+  setError(error: string) {
+    this._loading.set(false);
+    this._error.set(error);
+  }
+
+  addDevice(device: Device) {
+    this._devices.update(devices => [...devices, device]);
+    this._loading.set(false);
+    this._error.set(null);
+  }
+
+  updateDevice(id: string, updates: Partial<Device>) {
+    this._devices.update(devices =>
+      devices.map(d => d.id === id ? {...d, ...updates} : d)
+    );
+  }
+
+  removeDevice(id: string) {
+    this._devices.update(devices => devices.filter(d => d.id !== id));
+  }
+}

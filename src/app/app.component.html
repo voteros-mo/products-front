@@ -1,7 +1,8 @@
 <mat-toolbar color="primary" class="header">
   <span>Gestión de dispositivos</span>
+  <span class="spacer"></span>
+  <button class="create-button" mat-raised-button (click)="openCreateDialog()">Crear</button>
 </mat-toolbar>
-<a routerLink="products/new">Añadir producto</a>
 <div class="content">
   <router-outlet />
 </div>

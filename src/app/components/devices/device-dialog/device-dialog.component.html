@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Editar Dispositivo' : 'Crear Dispositivo' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="deviceForm" class="device-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" placeholder="Ingrese el nombre del dispositivo">
+      <mat-error *ngIf="deviceForm.get('name')?.hasError('required')">
+        El nombre es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Marca</mat-label>
+      <input matInput formControlName="brand" placeholder="Ingrese la marca">
+      <mat-error *ngIf="deviceForm.get('brand')?.hasError('required')">
+        La marca es obligatoria
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Precio</mat-label>
+      <input matInput type="number" formControlName="price" placeholder="Ingrese el precio">
+      <mat-error *ngIf="deviceForm.get('price')?.hasError('required')">
+        El precio es obligatorio
+      </mat-error>
+      <mat-error *ngIf="deviceForm.get('price')?.hasError('min')">
+        El precio debe ser mayor a 0
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Sistema Operativo</mat-label>
+      <input matInput formControlName="operating_system" placeholder="Ingrese el sistema operativo">
+      <mat-error *ngIf="deviceForm.get('operating_system')?.hasError('required')">
+        El sistema operativo es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha de Lanzamiento</mat-label>
+      <input matInput type="date" formControlName="release_date">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>URL de Imagen</mat-label>
+      <input matInput formControlName="image_url" placeholder="Ingrese la URL de la imagen">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()">
+    {{ isEditMode ? 'Actualizar' : 'Crear' }}
+  </button>
+</mat-dialog-actions>

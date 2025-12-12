@@ -1,40 +1,40 @@
 {
   "products": [
     {
-      "id": 1,
       "name": "Portátil Ultraligero",
       "brand": "Portátil de 14 pulgadas con procesador i7 y 16GB de RAM.",
       "price": 1250.99,
-      "operating_system": "Android",
-      "release_date": "07-12-2025",
-      "image_url": "photo"
+      "operating_system": "Windows 11",
+      "release_date": "2025-10-10",
+      "image_url": "",
+      "id": "2"
     },
     {
-      "id": 2,
       "name": "Portátil Ultraligero",
       "brand": "Portátil de 14 pulgadas con procesador i7 y 16GB de RAM.",
       "price": 1250.99,
       "operating_system": "Android",
-      "release_date": "07-12-2025",
-      "image_url": "photo"
+      "release_date": "2024-11-20",
+      "image_url": "",
+      "id": "3"
     },
     {
-      "id": 3,
-      "name": "Portátil Ultraligero",
-      "brand": "Portátil de 14 pulgadas con procesador i7 y 16GB de RAM.",
-      "price": 1250.99,
+      "id": "e824",
+      "name": "Móvil Samsung Ultra S25",
+      "brand": "Samsung",
+      "price": 1345.5,
       "operating_system": "Android",
-      "release_date": "07-12-2025",
-      "image_url": "photo"
+      "release_date": "2024-02-10",
+      "image_url": ""
     },
     {
-      "id": 4,
-      "name": "Portátil Ultraligero",
-      "brand": "Portátil de 14 pulgadas con procesador i7 y 16GB de RAM.",
-      "price": 1250.99,
+      "name": "Móvil Samsung A17 5G",
+      "brand": "Samsung",
+      "price": 450,
       "operating_system": "Android",
-      "release_date": "07-12-2025",
-      "image_url": "photo"
+      "release_date": "2024-03-11",
+      "image_url": "",
+      "id": "e33b"
     }
   ]
 }

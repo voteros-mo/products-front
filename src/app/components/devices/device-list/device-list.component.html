@@ -1,11 +1,72 @@
-@if (hasDevices()) {
-    <div>
-        <ul>
-            @for (device of devices(); track device.id) {
-                <li>
-                    <a [routerLink]="['/products', device.id]">{{ device.name }} - {{ device.price | currency: 'EUR'}}</a>
-                </li>
-            }
-        </ul>
+<div class="device-list-container">
+  @if (hasDevices()) {
+    <div class="header-section">
+      <h1>Catálogo de Dispositivos</h1>
+      <p class="subtitle">{{ totalDevices() }} dispositivos disponibles</p>
     </div>
-}
+
+    <div class="devices-grid">
+      @for (device of paginatedDevices(); track device.id) {
+        <mat-card class="device-card">
+          <mat-card-header>
+            <mat-card-title>{{ device.name }}</mat-card-title>
+            <mat-card-subtitle>{{ device.brand }}</mat-card-subtitle>
+          </mat-card-header>
+
+          @if (device.image_url) {
+            <img mat-card-image [src]="device.image_url" [alt]="device.name" class="device-image">
+          } @else {
+            <div class="no-image">
+              <span>Sin imagen</span>
+            </div>
+          }
+
+          <mat-card-content>
+            <div class="device-info">
+              <div class="info-row">
+                <span class="label">Sistema Operativo:</span>
+                <mat-chip>{{ device.operating_system }}</mat-chip>
+              </div>
+
+              @if (device.release_date) {
+                <div class="info-row">
+                  <span class="label">Lanzamiento:</span>
+                  <span>{{ device.release_date | date: 'dd/MM/yyyy' }}</span>
+                </div>
+              }
+
+              <div class="price-section">
+                <span class="price">{{ device.price | currency: 'EUR' }}</span>
+              </div>
+            </div>
+          </mat-card-content>
+
+          <mat-card-actions align="end">
+            <a [routerLink]="['/products', device.id]" mat-raised-button color="primary">
+              Ver Detalles
+            </a>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+
+    <mat-paginator
+      [length]="totalDevices()"
+      [pageSize]="pageSize()"
+      [pageIndex]="pageIndex()"
+      [pageSizeOptions]="[10, 20, 30, 50]"
+      (page)="onPageChange($event)"
+      showFirstLastButtons
+      class="paginator">
+    </mat-paginator>
+  } @else {
+    <div class="empty-state">
+      <mat-card>
+        <mat-card-content>
+          <h2>No hay dispositivos disponibles</h2>
+          <p>Comienza agregando tu primer dispositivo</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  }
+</div>

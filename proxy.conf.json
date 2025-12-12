@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://backend-820870935610.europe-southwest1.run.app",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
